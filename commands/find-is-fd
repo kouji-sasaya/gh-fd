@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+found=1
+for name in fd fdfind; do
+  if path="$(command -v "$name" 2>/dev/null)"; then
+    echo "$name: $path ($("$path" --version 2>/dev/null || echo unknown version))"
+    found=0
+  fi
+done
+
+if [ "$found" -ne 0 ]; then
+  echo "fd is not installed. Run: gh fd setup" >&2
+fi
+exit "$found"
